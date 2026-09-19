@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="印尼火山与海岛 · 8天7夜私人旅行手册">
+<title>印尼火山与海岛 · 国庆8天7夜旅行手册</title>
+<style>
+:root{
+  --bg:#f6f1e6; --card:#fffdf6; --ink:#3b3325; --muted:#8b7d62; --line:#e4d9c1;
+  --accent:#c96f4a; --soft:#f0e8d5;
+  --c1:#e76f51; --c2:#f4a261; --c3:#2a9d8f; --c4:#457b9d;
+  --c5:#d62828; --c6:#9b5de5; --c7:#3a86ff; --c8:#8d99ae;
+}
+[data-theme="dark"]{
+  --bg:#171511; --card:#221f19; --ink:#eae2d0; --muted:#a2967b; --line:#3b352a;
+  --accent:#e08b63; --soft:#2b2720;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.65;
+  background-image:radial-gradient(circle at 20% 10%, rgba(201,111,74,.05), transparent 40%),
+                   radial-gradient(circle at 85% 90%, rgba(42,157,143,.05), transparent 40%);
+}
+.wrap{max-width:760px; margin:0 auto; padding:14px 14px 60px;}
+header.top{position:relative; text-align:center; padding:26px 10px 6px;}
+header.top h1{font-size:26px; letter-spacing:2px;}
+header.top .sub{color:var(--muted); font-size:13.5px; margin-top:6px; letter-spacing:1px;}
+#themeBtn{position:absolute; top:18px; right:6px; border:1px solid var(--line); background:var(--card);
+  color:var(--ink); border-radius:999px; padding:6px 12px; font-size:14px; cursor:pointer;}
+section{margin-top:22px;}
+h2.sec{font-size:18px; letter-spacing:2px; margin-bottom:12px; display:flex; align-items:center; gap:8px;}
+h2.sec::after{content:""; flex:1; border-top:2px dashed var(--line);}
+.card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px;
+  box-shadow:0 2px 10px rgba(60,50,30,.06);}
+/* 此刻关注 */
+#nowCard{text-align:center; position:relative; overflow:hidden;}
+#nowCard .tape{position:absolute; top:-8px; left:50%; transform:translateX(-50%) rotate(-2deg);
+  background:var(--accent); color:#fff; font-size:12px; letter-spacing:3px; padding:4px 18px; border-radius:3px; opacity:.92;}
+#nowEvt{font-size:17px; margin-top:14px; font-weight:600;}
+#nowTime{color:var(--muted); font-size:13px; margin-top:4px;}
+#cd{display:flex; justify-content:center; gap:10px; margin-top:14px;}
+#cd .cell{background:var(--soft); border-radius:12px; padding:10px 0; width:70px;}
+#cd .num{font-size:30px; font-weight:700; font-variant-numeric:tabular-nums; line-height:1.1;}
+#cd .lab{font-size:11px; color:var(--muted); letter-spacing:2px; margin-top:2px;}
+#nowDay{display:inline-block; margin-top:12px; font-size:12px; color:var(--muted); border:1px dashed var(--line);
+  border-radius:999px; padding:3px 12px;}
+/* 地图 */
+.mapscroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+.mapscroll svg{min-width:660px; width:100%; height:auto; display:block;}
+.legend{display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:10px; font-size:12px; color:var(--muted);}
+.legend .chip{display:inline-flex; align-items:center; gap:5px;}
+.legend .dot{width:12px; height:12px; border-radius:50%; display:inline-block;}
+/* 订单 */
+.bk h3{font-size:15px; margin:14px 0 8px; display:flex; align-items:center; gap:6px;}
+.bk h3:first-child{margin-top:0;}
+.bkrow{border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin-bottom:8px; background:var(--bg);}
+.bkrow .t{font-weight:600; font-size:14.5px;}
+.bkrow .d{font-size:13px; color:var(--muted); margin-top:3px;}
+.bkrow .d a{color:inherit;}
+.tag{display:inline-block; font-size:11px; border-radius:6px; padding:1px 7px; margin-left:6px; vertical-align:1px;}
+.tag.ok{background:rgba(42,157,143,.15); color:#2a9d8f;}
+.tag.warn{background:rgba(214,40,40,.12); color:#d62828;}
+.tag.wait{background:rgba(244,162,97,.25); color:#b06f1f;}
+[data-theme="dark"] .tag.wait{color:#f4a261;}
+/* 逐日行程 */
+.day{border-left:5px solid var(--line); }
+.day .dhead{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; margin-bottom:10px;}
+.day .dnum{font-size:12px; font-weight:700; color:#fff; border-radius:8px; padding:2px 9px; letter-spacing:1px;}
+.day .dtitle{font-size:16px; font-weight:700;}
+.day .dstay{font-size:12px; color:var(--muted); width:100%;}
+.tl{border-top:1px dashed var(--line);}
+.tl .row{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:8px 2px; border-bottom:1px dashed var(--line);}
+.tl .row:last-child{border-bottom:none;}
+.tl .tm{font-variant-numeric:tabular-nums; font-weight:600; font-size:13px; text-align:right; color:var(--ink);}
+.tl .tm .tz{display:block; font-size:10px; color:var(--muted); font-weight:400;}
+.tl .ct{font-size:14px;}
+.poi{color:inherit; text-decoration:none; border-bottom:1px dotted var(--accent);}
+.poi::after{content:"⌖"; font-size:11px; color:var(--accent); margin-left:1px;}
+a{color:var(--accent);}
+details.route{margin-top:10px; border:1px dashed var(--line); border-radius:12px; background:var(--bg);}
+details.route summary{cursor:pointer; padding:9px 12px; font-size:13.5px; list-style:none;}
+details.route summary::-webkit-details-marker{display:none;}
+details.route summary::before{content:"▸ "; color:var(--accent);}
+details.route[open] summary::before{content:"▾ ";}
+details.route .inner{padding:2px 10px 12px;}
+.stripbox{overflow-x:auto;}
+.stripbox svg{min-width:600px; width:100%; height:auto;}
+.navbtn{display:inline-block; margin-top:8px; margin-right:8px; background:var(--accent); color:#fff !important;
+  text-decoration:none; font-size:13px; border-radius:999px; padding:7px 14px;}
+.navbtn.ghost{background:transparent; border:1px solid var(--accent); color:var(--accent) !important;}
+/* 待办 / 贴士 */
+ul.plain{list-style:none;}
+ul.plain li{padding:7px 2px 7px 24px; position:relative; border-bottom:1px dashed var(--line); font-size:14px;}
+ul.plain li:last-child{border-bottom:none;}
+ul.plain li::before{content:"✎"; position:absolute; left:2px; color:var(--accent);}
+ul.plain li .dl{font-size:11px; background:rgba(214,40,40,.12); color:#d62828; border-radius:6px; padding:1px 7px; margin-right:6px;}
+.tips h3{font-size:14.5px; margin:12px 0 4px;}
+.tips p{font-size:13.5px; color:var(--ink);}
+.tips .mut{color:var(--muted);}
+footer{margin-top:34px; text-align:center; color:var(--muted); font-size:12px; line-height:2;}
+@media print{ #themeBtn,.navbtn,details.route{display:none;} body{background:#fff;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <button id="themeBtn" type="button" aria-label="切换昼夜配色">🌙</button>
+  <h1>🌋 印尼火山与海岛 🏝️</h1>
+  <div class="sub">GAO &amp; XU · 2026.9.27 – 10.4 · 8天7夜 ·  Bromo / 巴厘岛 / 科莫多 / 佩妮达 / 新加坡</div>
+</header>
+
+<!-- 1. 此刻关注 -->
+<section id="now">
+  <div class="card" id="nowCard">
+    <div class="tape">此 刻 关 注</div>
+    <div id="nowEvt">—</div>
+    <div id="nowTime">—</div>
+    <div id="cd">
+      <div class="cell"><div class="num" id="cdD">-</div><div class="lab">天</div></div>
+      <div class="cell"><div class="num" id="cdH">-</div><div class="lab">时</div></div>
+      <div class="cell"><div class="num" id="cdM">-</div><div class="lab">分</div></div>
+      <div class="cell"><div class="num" id="cdS">-</div><div class="lab">秒</div></div>
+    </div>
+    <div id="nowDay"></div>
+  </div>
+</section>
+
+<!-- 2. 行程总览地图 -->
+<section id="map">
+  <h2 class="sec">🗺️ 行程总览</h2>
+  <div class="card">
+    <div class="mapscroll">
+    <svg viewBox="0 0 900 600" role="img" aria-label="行程总览手绘地图">
+      <rect x="8" y="8" width="884" height="584" rx="22" fill="#f4edda" stroke="#e0d4b8" stroke-width="2"/>
+      <style>
+        .isle{fill:#eee5cd;stroke:#8b7d62;stroke-width:2;stroke-linejoin:round;}
+        .bub{fill:none;stroke:#8b7d62;stroke-width:1.6;stroke-dasharray:6 5;}
+        .sea{font-style:italic;font-size:15px;fill:#a99a76;letter-spacing:4px;}
+        .pl{font-size:12.5px;fill:#3b3325;font-weight:600;}
+        .pls{font-size:10.5px;fill:#8b7d62;}
+        .emo{font-size:15px;}
+        .rt{fill:none;stroke-width:3.2;stroke-linecap:round;}
+        .fly{stroke-dasharray:0.1 9;}
+        .boat{stroke-dasharray:8 5;}
+        .car{stroke-dasharray:4.5 4.5;}
+      </style>
+      <!-- 海域标注 -->
+      <text class="sea" x="430" y="245" text-anchor="middle">爪 哇 海</text>
+      <text class="sea" x="450" y="560" text-anchor="middle">印 度 洋</text>
+      <!-- 中国（出发/终点） -->
+      <rect class="bub" x="688" y="26" width="184" height="98" rx="14"/>
+      <circle cx="782" cy="70" r="6" fill="#e76f51"/>
+      <text class="pl" x="782" y="94" text-anchor="middle">上海 · 杭州</text>
+      <text class="pls" x="782" y="112" text-anchor="middle">🏠 10/4 宿杭州（待订）</text>
+      <!-- 吉隆坡（转机） -->
+      <rect class="bub" x="28" y="42" width="176" height="72" rx="14"/>
+      <circle cx="116" cy="78" r="6" fill="#e76f51"/>
+      <text class="pl" x="116" y="102" text-anchor="middle">吉隆坡 KLIA2</text>
+      <!-- 新加坡 -->
+      <rect class="bub" x="28" y="158" width="188" height="82" rx="14"/>
+      <circle cx="122" cy="190" r="6" fill="#3a86ff"/>
+      <text class="pl" x="122" y="212" text-anchor="middle">新加坡 · 樟宜</text>
+      <text class="pls" x="122" y="228" text-anchor="middle">🌙 10/3 夜宿机场</text>
+      <!-- 爪哇岛 -->
+      <path class="isle" d="M255,305 Q310,275 375,288 Q440,298 452,332 Q458,365 405,382 Q325,398 272,378 Q232,352 255,305 Z"/>
+      <text class="pls" x="290" y="396">爪哇岛</text>
+      <circle cx="338" cy="322" r="5.5" fill="#f4a261"/>
+      <text class="pl" x="330" y="314" text-anchor="end">泗水</text>
+      <circle cx="352" cy="358" r="5.5" fill="#f4a261"/>
+      <text class="pl" x="362" y="362">Bromo🌋</text>
+      <text class="pls" x="352" y="398" text-anchor="middle">🏠 Sky View Bromo · 9/27</text>
+      <!-- 巴厘岛 -->
+      <path class="isle" d="M468,348 Q508,336 534,352 Q546,370 524,384 Q490,394 464,380 Q454,362 468,348 Z"/>
+      <text class="pls" x="470" y="340">巴厘岛</text>
+      <circle cx="488" cy="372" r="5.5" fill="#2a9d8f"/>
+      <circle cx="517" cy="369" r="4" fill="#d62828"/>
+      <text class="pls" x="522" y="360">萨努尔码头</text>
+      <text class="pls" x="488" y="396" text-anchor="middle">🏠 拉玛度假村 · 9/28 &amp; 10/2</text>
+      <!-- 佩妮达岛 -->
+      <path class="isle" d="M520,414 Q556,404 576,420 Q582,440 556,452 Q526,458 512,440 Q506,424 520,414 Z"/>
+      <circle cx="530" cy="418" r="4" fill="#d62828"/>
+      <circle cx="521" cy="432" r="4.5" fill="#d62828"/>
+      <circle cx="569" cy="436" r="4.5" fill="#9b5de5"/>
+      <text class="pls" x="500" y="446" text-anchor="end">精灵坠崖</text>
+      <text class="pls" x="578" y="440">钻石沙滩</text>
+      <text class="pls" x="545" y="470" text-anchor="middle">🏠 佩妮达住宿（待定）</text>
+      <!-- 弗洛勒斯岛·科莫多 -->
+      <path class="isle" d="M548,300 Q568,290 584,300 Q590,314 576,322 Q558,326 546,314 Q540,306 548,300 Z"/>
+      <text class="pls" x="566" y="284" text-anchor="middle">科莫多国家公园</text>
+      <path class="isle" d="M600,322 Q672,300 742,316 Q772,332 746,352 Q672,372 608,354 Q584,340 600,322 Z"/>
+      <circle cx="618" cy="338" r="5.5" fill="#457b9d"/>
+      <text class="pl" x="628" y="330">纳闽巴霍</text>
+      <text class="pls" x="618" y="364" text-anchor="middle">🏠 Laprima · 9/29–10/1 两晚</text>
+      <!-- 路线：D1 -->
+      <path class="rt fly" stroke="#e76f51" d="M780,72 C620,10 280,28 114,80"/>
+      <text class="emo" x="440" y="32" text-anchor="middle" transform="rotate(-6 440 32)">✈️</text>
+      <path class="rt fly" stroke="#e76f51" d="M114,82 C152,182 252,276 336,320"/>
+      <text class="emo" x="222" y="212" text-anchor="middle" transform="rotate(38 222 212)">✈️</text>
+      <path class="rt car" stroke="#e76f51" d="M340,324 Q352,340 352,356"/>
+      <!-- 路线：D2 -->
+      <path class="rt car" stroke="#f4a261" d="M350,356 Q336,344 335,324"/>
+      <text class="emo" x="322" y="344" text-anchor="middle">🚗</text>
+      <path class="rt fly" stroke="#f4a261" d="M340,320 C396,300 452,330 486,368"/>
+      <text class="emo" x="414" y="314" text-anchor="middle" transform="rotate(12 414 314)">✈️</text>
+      <!-- 路线：D3 -->
+      <path class="rt fly" stroke="#2a9d8f" d="M492,366 C534,340 576,330 614,336"/>
+      <text class="emo" x="550" y="350" text-anchor="middle" transform="rotate(-6 550 350)">✈️</text>
+      <!-- 路线：D4 科莫多跳岛 -->
+      <path class="rt boat" stroke="#457b9d" d="M618,340 Q594,312 567,315 Q590,342 618,340 Z"/>
+      <text class="emo" x="586" y="332" text-anchor="middle">⛵</text>
+      <!-- 路线：D5 -->
+      <path class="rt fly" stroke="#d62828" d="M614,344 C556,314 510,338 492,366"/>
+      <text class="emo" x="558" y="314" text-anchor="middle" transform="rotate(-10 558 314)">✈️</text>
+      <path class="rt boat" stroke="#d62828" d="M519,373 Q529,398 530,416"/>
+      <!-- 路线：D6 -->
+      <path class="rt boat" stroke="#9b5de5" d="M534,421 Q526,398 520,375"/>
+      <text class="emo" x="540" y="396" text-anchor="middle">⛵</text>
+      <!-- 路线：D7 -->
+      <path class="rt fly" stroke="#3a86ff" d="M486,366 C388,300 192,242 124,194"/>
+      <text class="emo" x="300" y="258" text-anchor="middle" transform="rotate(-27 300 258)">✈️</text>
+      <!-- 路线：D8 -->
+      <path class="rt fly" stroke="#8d99ae" d="M124,190 C222,108 560,50 780,70"/>
+      <text class="emo" x="462" y="82" text-anchor="middle" transform="rotate(-5 462 82)">✈️</text>
+    </svg>
+    </div>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:#e76f51"></span>D1 9/27</span>
+      <span class="chip"><span class="dot" style="background:#f4a261"></span>D2 9/28</span>
+      <span class="chip"><span class="dot" style="background:#2a9d8f"></span>D3 9/29</span>
+      <span class="chip"><span class="dot" style="background:#457b9d"></span>D4 9/30</span>
+      <span class="chip"><span class="dot" style="background:#d62828"></span>D5 10/1</span>
+      <span class="chip"><span class="dot" style="background:#9b5de5"></span>D6 10/2</span>
+      <span class="chip"><span class="dot" style="background:#3a86ff"></span>D7 10/3</span>
+      <span class="chip"><span class="dot" style="background:#8d99ae"></span>D8 10/4</span>
+      <span class="chip">✈️ 飞机</span><span class="chip">⛵ 船</span><span class="chip">🚗 车/摩的</span><span class="chip">🏠 住宿</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3. 已确认订单 -->
+<section id="bookings">
+  <h2 class="sec">🧾 已确认订单</h2>
+  <div class="card bk">
+    <h3>✈️ 机票（6 段，全部已出票）</h3>
+    <div class="bkrow"><div class="t">9/27 D7331 + QZ321 · 两人同机</div>
+      <div class="d">浦东 T2 <b>01:35</b>(北京时间) → 吉隆坡 KLIA2 07:15 → 泗水朱安达 T2 <b>10:45</b>(印尼西部时间)</div></div>
+    <div class="bkrow"><div class="t">9/28 JT802 狮航 · 两人同机</div>
+      <div class="d">泗水 T1 <b>15:30</b>(WIB) → 巴厘岛登巴萨 国内航站楼 <b>17:30</b>(WITA) · 托运 10kg / 随身共 7kg</div></div>
+    <div class="bkrow"><div class="t">9/29 巴厘岛 → 科莫多 · 分两班</div>
+      <div class="d">XU：QZ644 <b>07:10→08:15</b> ｜ GAO：QZ646 <b>11:25→12:40</b>（均为巴厘岛时间）</div></div>
+    <div class="bkrow"><div class="t">10/1 科莫多 → 巴厘岛 · 分两班</div>
+      <div class="d">XU：QZ645 <b>08:40→09:50</b> ｜ GAO：QZ643 <b>10:35→11:50</b>（均为巴厘岛时间）</div></div>
+    <div class="bkrow"><div class="t">10/3 TR283 酷航 · 两人同机</div>
+      <div class="d">巴厘岛 国际航站楼 <b>19:40</b> → 新加坡樟宜 T1 <b>22:35</b></div></div>
+    <div class="bkrow"><div class="t">10/4 TR188 酷航 · 两人同机</div>
+      <div class="d">新加坡樟宜 T1 <b>16:30</b> → 杭州萧山 T4 <b>21:45</b>(北京时间)</div></div>
+
+    <h3>🏨 酒店</h3>
+    <div class="bkrow"><div class="t">9/27 <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Sky+View+Bromo+Cemoro+Lawang">Sky View Bromo</a> · 火山小镇<span class="tag ok">已订 · Agoda</span></div>
+      <div class="d">豪华双床山景房 · Cemoro Lawang, Ngadisari, Sukapura · 条件一般，记得用一次性四件套</div></div>
+    <div class="bkrow"><div class="t">9/28 <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Rama+Beach+Resort+and+Villas+Bali">拉玛海滩度假村别墅酒店</a> · 库塔<span class="tag ok">已确认</span></div>
+      <div class="d">Jl. Wana Segara No.31, Tuban, Kuta · <a href="tel:+62361751557">+62-361-751557</a> · 14:00 后入住 · 含 9/29 双早 · 到店另付税费约 ¥100 · 报 XU 名字入住</div></div>
+    <div class="bkrow"><div class="t">9/29–10/1 <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Laprima+Hotel+Labuan+Bajo">Laprima 拉普利马酒店</a> · 纳闽巴霍 · 两晚<span class="tag ok">已确认</span></div>
+      <div class="d">Jl. Pantai Pede, Labuan Bajo · <a href="tel:+623852443700">+62-385-2443700</a> · 15:00 入住 / 12:00 退房 · 含双早 · 不可取消<span class="tag warn">9/27 前预约接机</span></div></div>
+    <div class="bkrow"><div class="t">10/1 佩妮达岛 · 二选一<span class="tag wait">待最终决定</span></div>
+      <div class="d">① <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Aloka+Penida">Aloka Penida</a>（钻石沙滩附近，<b>推荐</b>：次日不用早起）② <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Kelingking+Tatakan+Bungalow">Kelingking Tatakan Bungalow</a>（精灵坠崖旁，日落后 10 分钟到）· 两家均已通过 Agoda 下单，定后退一家</div></div>
+    <div class="bkrow"><div class="t">10/2 <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Rama+Beach+Resort+and+Villas+Bali">拉玛海滩度假村别墅酒店</a> · 库塔<span class="tag ok">已确认</span></div>
+      <div class="d">同 9/28 · 含 10/3 双早 · 到店另付税费约 ¥100 · 报 XU 名字入住</div></div>
+    <div class="bkrow"><div class="t">10/3 夜宿 <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Changi+Airport+Terminal+1">新加坡樟宜机场</a></div>
+      <div class="d">T1 大沙发 / 寻秘花园 · 无需订房</div></div>
+    <div class="bkrow"><div class="t">10/4 杭州萧山机场附近酒店<span class="tag warn">未订</span></div>
+      <div class="d">21:45 落地后入住，见待办清单</div></div>
+
+    <h3>⛵ 船票</h3>
+    <div class="bkrow"><div class="t">10/1 OceanSpeed · 萨努尔 → 佩妮达<span class="tag ok">已订 · 携程</span></div>
+      <div class="d"><b>14:00</b> 开船 · <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Sanur+Harbour">萨努尔码头</a> 提前 30–45 分钟取票登船</div></div>
+    <div class="bkrow"><div class="t">10/2 Wahana Virendra · 佩妮达 → 萨努尔<span class="tag ok">已订 · Klook</span></div>
+      <div class="d"><b>16:00</b> 开船 · 避开 17:00 返程高峰</div></div>
+
+    <h3>🎟️ 其他预约</h3>
+    <div class="bkrow"><div class="t">10/4 新加坡免费游 · 传统文化之旅<span class="tag ok">已预约 10:00 场</span></div>
+      <div class="d">10:00–12:30 · 英语团 · 中央商务区-牛车水-新加坡河-甘榜格南 · 转机区柜台报到，集体出入境，勿提前自行出关</div></div>
+  </div>
+</section>
+
+<!-- 4. 逐日行程 -->
+<section id="days">
+  <h2 class="sec">📅 逐日行程</h2>
+
+  <div class="card day" style="border-left-color:#e76f51">
+    <div class="dhead"><span class="dnum" style="background:#e76f51">D1</span><span class="dtitle">9/27 周六 · 上海 → 泗水 → Bromo 火山小镇</span>
+      <span class="dstay">🏠 宿：Sky View Bromo（火山小镇）</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">01:35<span class="tz">北京时</span></div><div class="ct"><a class="poi" href="https://www.google.com/maps/search/?api=1&query=Shanghai+Pudong+Airport+Terminal+2">浦东 T2</a> 起飞 D7331（<b>9/26 晚 22:30 前</b>到机场）</div></div>
+      <div class="row"><div class="tm">07:15<span class="tz">马来时</span></div><div class="ct"><a class="poi" href="https://www.google.com/maps/search/?api=1&query=KLIA2">吉隆坡 KLIA2</a> 转机，同航站楼跟随 Transfer 指示，09:10 再飞</div></div>
+      <div class="row"><div class="tm">10:45<span class="tz">WIB</span></div><div class="ct">抵达<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Juanda+International+Airport">泗水朱安达 T2</a>（电子签可走自助闸机）</div></div>
+      <div class="row"><div class="tm">11:30<span class="tz">WIB</span></div><div class="ct">Grab 去 <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Cemoro+Lawang+Probolinggo">Cemoro Lawang 火山小镇</a>（走出到达厅一段再叫车，约 2.5–3h）</div></div>
+      <div class="row"><div class="tm">15:00<span class="tz">WIB</span></div><div class="ct">入住休息，补觉早睡</div></div>
+      <div class="row"><div class="tm">傍晚<span class="tz">WIB</span></div><div class="ct">现找明晨摩的司机，谈好价格与接送时间</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d1"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Juanda+International+Airport&destination=Cemoro+Lawang,+Probolinggo">🧭 泗水机场 → 火山小镇</a>
+    </div></details>
+  </div>
+
+  <div class="card day" style="border-left-color:#f4a261; margin-top:14px;">
+    <div class="dhead"><span class="dnum" style="background:#f4a261">D2</span><span class="dtitle">9/28 周日 · Bromo 日出 → 飞巴厘岛</span>
+      <span class="dstay">🏠 宿：拉玛海滩度假村（库塔）· 到店另付税费约 ¥100</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">03:00<span class="tz">WIB</span></div><div class="ct">摩的出发去<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Penanjakan+Bromo">观景台</a>（冲锋衣+羽绒内胆+暖宝宝，凌晨 5–10°C）</div></div>
+      <div class="row"><div class="tm">05:15<span class="tz">WIB</span></div><div class="ct">🌅 Bromo 日出</div></div>
+      <div class="row"><div class="tm">06:30<span class="tz">WIB</span></div><div class="ct">下山上<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Mount+Bromo">火山口</a>（防灰鞋套+N95）</div></div>
+      <div class="row"><div class="tm">09:30<span class="tz">WIB</span></div><div class="ct">回酒店取行李，早午饭看时间</div></div>
+      <div class="row"><div class="tm">10:30<span class="tz">WIB</span></div><div class="ct">包车去泗水机场（约 3h，<b>务必提前订好</b>，小镇打不到车）</div></div>
+      <div class="row"><div class="tm">15:30<span class="tz">WIB</span></div><div class="ct">JT802 泗水 T1 → 巴厘岛 <b>17:30</b>（巴厘岛时间，+1h）</div></div>
+      <div class="row"><div class="tm">18:00<span class="tz">WITA</span></div><div class="ct">入住拉玛，海滩日落 + 休息</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d2"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Cemoro+Lawang&destination=Juanda+International+Airport&waypoints=Penanjakan+Bromo%7CMount+Bromo">🧭 小镇 → 观景台 → 火山口 → 机场</a>
+    </div></details>
+  </div>
+
+  <div class="card day" style="border-left-color:#2a9d8f; margin-top:14px;">
+    <div class="dhead"><span class="dnum" style="background:#2a9d8f">D3</span><span class="dtitle">9/29 周一 · 飞科莫多 · 半日慢游</span>
+      <span class="dstay">🏠 宿：Laprima 拉普利马酒店（纳闽巴霍，连住 2 晚，含双早）</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">07:10<span class="tz">WITA</span></div><div class="ct"><b>XU</b> QZ644 先飞，08:15 到</div></div>
+      <div class="row"><div class="tm">11:25<span class="tz">WITA</span></div><div class="ct"><b>GAO</b> QZ646 后飞，12:40 到</div></div>
+      <div class="row"><div class="tm">—<span class="tz">&nbsp;</span></div><div class="ct">酒店接机（含接送机，<b>需 9/27 前联系酒店预约</b>，报两人航班号）</div></div>
+      <div class="row"><div class="tm">15:00<span class="tz">WITA</span></div><div class="ct">入住 Laprima</div></div>
+      <div class="row"><div class="tm">下午<span class="tz">WITA</span></div><div class="ct">Plan A：<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Rangko+Cave">蓝洞 Rangko Cave</a>（评价两极）｜ Plan B：海边咖啡店看海 ☕</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d3"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Komodo+International+Airport&destination=Rangko+Cave&waypoints=Laprima+Hotel+Labuan+Bajo">🧭 机场 → 酒店 → 蓝洞</a>
+    </div></details>
+  </div>
+
+  <div class="card day" style="border-left-color:#457b9d; margin-top:14px;">
+    <div class="dhead"><span class="dnum" style="background:#457b9d">D4</span><span class="dtitle">9/30 周二 · 科莫多拼船一日游</span>
+      <span class="dstay">🏠 宿：Laprima 拉普利马酒店</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">06:30<span class="tz">WITA</span></div><div class="ct"><a class="poi" href="https://www.google.com/maps/search/?api=1&query=Pelabuhan+Labuan+Bajo">码头</a>集合（时间以船家前一日通知为准）</div></div>
+      <div class="row"><div class="tm">全天<span class="tz">WITA</span></div><div class="ct">⛵ 拼船出海：<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Padar+Island">帕达尔岛</a> / 科莫多龙 / <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Pink+Beach+Komodo">粉红沙滩</a> 等（停靠以船家为准；约 ¥500–600/人 + 公园门票 ¥200+）<span class="tag warn">需提前订</span></div></div>
+      <div class="row"><div class="tm">贴士<span class="tz">&nbsp;</span></div><div class="ct">防晒 + 晕船药 + 足量水；那片海域门票是通票，不只是看龙</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d4"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Laprima+Hotel+Labuan+Bajo&destination=Pelabuhan+Labuan+Bajo">🧭 酒店 → 码头</a>
+    </div></details>
+  </div>
+
+  <div class="card day" style="border-left-color:#d62828; margin-top:14px;">
+    <div class="dhead"><span class="dnum" style="background:#d62828">D5</span><span class="dtitle">10/1 周三 · 回巴厘岛 → 佩妮达西线</span>
+      <span class="dstay">🏠 宿：佩妮达岛（二选一待定，推荐钻石沙滩侧 Aloka）</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">08:40<span class="tz">WITA</span></div><div class="ct"><b>XU</b> QZ645 先飞，09:50 落地后直接打车去<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Sanur+Harbour">萨努尔码头</a>取票</div></div>
+      <div class="row"><div class="tm">10:35<span class="tz">WITA</span></div><div class="ct"><b>GAO</b> QZ643 后飞，11:50 落地即打车跟来（车程约 1h，码头汇合）</div></div>
+      <div class="row"><div class="tm">14:00<span class="tz">WITA</span></div><div class="ct">⛵ OceanSpeed 开船（携程已订，提前 30–45 分钟到，早到可在码头附近吃中饭）</div></div>
+      <div class="row"><div class="tm">14:45<span class="tz">WITA</span></div><div class="ct">上岛，包车西线：<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Broken+Beach+Nusa+Penida">破碎沙滩</a> → <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Angel%27s+Billabong">天使浴池</a></div></div>
+      <div class="row"><div class="tm">17:00<span class="tz">WITA</span></div><div class="ct"><a class="poi" href="https://www.google.com/maps/search/?api=1&query=Kelingking+Beach">精灵坠崖</a> 等日落（18:15 前后 🌅）</div></div>
+      <div class="row"><div class="tm">傍晚<span class="tz">WITA</span></div><div class="ct">司机送酒店：住东边约 1h 夜路，提前和司机、酒店打好招呼</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d5"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Banjar+Nyuh+Harbour+Nusa+Penida&destination=Kelingking+Beach&waypoints=Broken+Beach+Nusa+Penida%7CAngel%27s+Billabong">🧭 岛上段：码头 → 破碎沙滩 → 天使浴池 → 精灵坠崖</a>
+      <a class="navbtn ghost" href="https://www.google.com/maps/dir/?api=1&origin=Ngurah+Rai+International+Airport&destination=Sanur+Harbour">巴厘岛机场 → 萨努尔码头</a>
+    </div></details>
+  </div>
+
+  <div class="card day" style="border-left-color:#9b5de5; margin-top:14px;">
+    <div class="dhead"><span class="dnum" style="background:#9b5de5">D6</span><span class="dtitle">10/2 周四 · 钻石沙滩 → 回巴厘岛</span>
+      <span class="dstay">🏠 宿：拉玛海滩度假村（库塔）· 到店另付税费约 ¥100</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">08:30<span class="tz">WITA</span></div><div class="ct">出发<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Diamond+Beach+Nusa+Penida">钻石沙滩</a>（9 点前到，晚了暴晒；可下崖，比精灵坠崖好爬）</div></div>
+      <div class="row"><div class="tm">上午<span class="tz">WITA</span></div><div class="ct">东线随选：<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Atuh+Beach">阿图海滩</a> / <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Rumah+Pohon+Tree+House">树屋</a></div></div>
+      <div class="row"><div class="tm">15:15<span class="tz">WITA</span></div><div class="ct">到码头，<b>16:00</b> Wahana Virendra 开船回巴厘岛（Klook 已订）</div></div>
+      <div class="row"><div class="tm">16:45<span class="tz">WITA</span></div><div class="ct">回萨努尔，打车去商场晚饭（<a class="poi" href="https://www.google.com/maps/search/?api=1&query=Discovery+Mall+Bali">Discovery Mall</a> / <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Beachwalk+Shopping+Center">Beachwalk</a>，离酒店很近）</div></div>
+      <div class="row"><div class="tm">19:30<span class="tz">WITA</span></div><div class="ct">回拉玛休息</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d6"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Diamond+Beach+Nusa+Penida&destination=Banjar+Nyuh+Harbour+Nusa+Penida&waypoints=Atuh+Beach">🧭 钻石沙滩 → 阿图海滩 → 码头</a>
+      <a class="navbtn ghost" href="https://www.google.com/maps/dir/?api=1&origin=Sanur+Harbour&destination=Rama+Beach+Resort+and+Villas+Bali">萨努尔码头 → 拉玛酒店</a>
+    </div></details>
+  </div>
+
+  <div class="card day" style="border-left-color:#3a86ff; margin-top:14px;">
+    <div class="dhead"><span class="dnum" style="background:#3a86ff">D7</span><span class="dtitle">10/3 周五 · 巴厘岛自由活动 → 飞新加坡</span>
+      <span class="dstay">🌙 夜宿：樟宜机场（T1 大沙发 / 寻秘花园）</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">白天<span class="tz">WITA</span></div><div class="ct">逛逛 / 按摩 / 买纪念品（详细攻略还没做，见待办）</div></div>
+      <div class="row"><div class="tm">17:00<span class="tz">WITA</span></div><div class="ct">出发去机场（酒店离机场约 10 分钟车程）</div></div>
+      <div class="row"><div class="tm">19:40<span class="tz">WITA</span></div><div class="ct">TR283 巴厘岛国际航站楼 → <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Changi+Airport+Terminal+1">新加坡樟宜 T1</a> 22:35</div></div>
+      <div class="row"><div class="tm">23:00<span class="tz">SGT</span></div><div class="ct">不出境玩法：T1 寻秘花园 / T2 梦幻花园·玄梦园 / T3 蝴蝶园 + 免费电影院</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d7"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Rama+Beach+Resort+and+Villas+Bali&destination=Ngurah+Rai+International+Airport&waypoints=Beachwalk+Shopping+Center">🧭 酒店 → Beachwalk → 机场</a>
+    </div></details>
+  </div>
+
+  <div class="card day" style="border-left-color:#8d99ae; margin-top:14px;">
+    <div class="dhead"><span class="dnum" style="background:#8d99ae">D8</span><span class="dtitle">10/4 周六 · 新加坡免费游 → 回杭州</span>
+      <span class="dstay">🏠 宿：杭州萧山机场附近（酒店未订）</span></div>
+    <div class="tl">
+      <div class="row"><div class="tm">09:00<span class="tz">SGT</span></div><div class="ct">转机区免费游柜台报到（已约 10:00 场，勿迟到）</div></div>
+      <div class="row"><div class="tm">10:00<span class="tz">SGT</span></div><div class="ct">传统文化之旅 2.5h：CBD → 牛车水 → 新加坡河 → 甘榜格南（英语团，集体出入境）</div></div>
+      <div class="row"><div class="tm">13:00<span class="tz">SGT</span></div><div class="ct"><a class="poi" href="https://www.google.com/maps/search/?api=1&query=Jewel+Changi+Airport">星耀樟宜</a>午饭：松发肉骨茶 / Mr.Coconut + 大瀑布拍照（在境外，需已随团入境）</div></div>
+      <div class="row"><div class="tm">14:30<span class="tz">SGT</span></div><div class="ct">T3 滑滑梯（注册可玩 10 次）→ 15:00 前进安检</div></div>
+      <div class="row"><div class="tm">16:30<span class="tz">SGT</span></div><div class="ct">TR188 樟宜 T1 → <a class="poi" href="https://www.google.com/maps/search/?api=1&query=Hangzhou+Xiaoshan+International+Airport">杭州萧山 T4</a> <b>21:45</b>（北京时）🏠</div></div>
+    </div>
+    <details class="route"><summary>🗺️ 当日路线 · 一键导航</summary><div class="inner">
+      <div class="stripbox" data-strip="d8"></div>
+      <a class="navbtn" href="https://www.google.com/maps/dir/?api=1&origin=Jewel+Changi+Airport&destination=Changi+Airport+Terminal+1&travelmode=walking">🧭 星耀樟宜 → T1 步行</a>
+    </div></details>
+  </div>
+
+  <p style="margin-top:14px; font-size:13.5px; color:var(--muted);">10/5：视情况在杭州逛逛或直接返程。</p>
+</section>
+
+<!-- 5. 待办清单 -->
+<section id="todo">
+  <h2 class="sec">✅ 待办清单</h2>
+  <div class="card">
+    <ul class="plain">
+      <li><span class="dl">尽快</span>佩妮达酒店二选一（推荐留 Aloka·钻石沙滩侧），退掉另一家</li>
+      <li><span class="dl">9/27 前</span>联系 Laprima 预约 9/29 接机（XU 08:15 到 / GAO 12:40 到，报航班号 QZ644、QZ646）</li>
+      <li><span class="dl">9/27 前</span>订 9/30 科莫多拼船一日游；订 9/28 Bromo → 泗水机场包车（小镇打不到车）</li>
+      <li>订 10/4 杭州萧山机场附近酒店</li>
+      <li>GAO 统一打印：两人电子签、机票行程单、酒店确认函</li>
+      <li>取印尼盾现金（GAO）；买身体防晒（还没买）</li>
+      <li>排 10/3 白天行程（按摩 / 纪念品攻略）</li>
+      <li>9/27 到火山小镇后，现找次日凌晨摩的并谈价</li>
+      <li>确认新加坡地铁卡没过期</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6. 实用贴士 -->
+<section id="tips">
+  <h2 class="sec">💡 实用贴士</h2>
+  <div class="card tips">
+    <h3>🕐 时区</h3>
+    <p>泗水（爪哇）WIB = UTC+7，比国内慢 1 小时；巴厘岛 / 科莫多 / 佩妮达 WITA = UTC+8，与国内相同；新加坡 SGT = UTC+8。本页所有时间均为<b>当地时间</b>，倒计时跨时区自动换算。</p>
+    <h3>🛂 出入境</h3>
+    <p>两人印尼 e-VOA 已出签（B1，停留 30 天，2026/12/5 前使用有效），电子护照可走自助闸机；新加坡过境免签 96h，免费游由领队集体带出入境。</p>
+    <h3>🧳 行李与值机</h3>
+    <p>国际段提前 3 小时到机场；狮航 / 亚航随身行李合计 ≤7kg（尺寸 40×30×20cm），JT802 含托运 10kg；机票须按顺序使用，跳段会被拒运。</p>
+    <h3>🌋 Bromo</h3>
+    <p>凌晨 5–10°C：冲锋衣 + 羽绒内胆 + 暖宝宝；穿不心疼的旧衣服（火山灰）；防灰鞋套 + N95；观景台早去占位。</p>
+    <h3>🏖️ 佩妮达岛</h3>
+    <p>山路颠簸，备晕车晕船药；钻石沙滩 9 点前到；精灵坠崖下崖往返约 1–1.5h，量力而行；包车司机出发前确认价格含不含停车费。</p>
+    <h3>🦎 科莫多</h3>
+    <p>拼船一日游约 ¥500–600/人 + 公园门票 ¥200+（门票覆盖整片区域）；穿可下水的鞋；防晒补涂要勤。</p>
+    <h3>✈️ 樟宜机场过夜</h3>
+    <p>不出境：T1 大沙发 + 寻秘花园 / T2 梦幻花园 / T3 蝴蝶园 + 免费电影院；星耀樟宜大瀑布在境外，需随免费游或自行入境后前往；寄存 11 新币/24h。</p>
+    <h3>🆘 紧急联系</h3>
+    <p class="mut">外交部全球领保热线 +86-10-12308 ｜ 印尼紧急电话 112 ｜ 酒店电话见「已确认订单」</p>
+  </div>
+</section>
+
+<footer>
+  GAO &amp; XU 的私人行程页 · 不含证件号 / 订单号<br>
+  时区对照：WIB=UTC+7 · WITA/SGT/北京时=UTC+8 · 所有时间均为当地时间
+</footer>
+</div>
+
+<script>
+/* ===== 此刻关注：下一个行程事件 + 倒计时（全部用带时区偏移的绝对时刻） ===== */
+var EVENTS=[
+ {t:"2026-09-27T01:35:00+08:00",label:"上海浦东 T2（D7331）",when:"9/27 01:35 北京时间",day:0},
+ {t:"2026-09-27T10:45:00+07:00",label:"抵达泗水 → Grab 去 Bromo 火山小镇",when:"9/27 10:45 WIB(UTC+7)",day:1},
+ {t:"2026-09-28T03:00:00+07:00",label:"出发去 Bromo 观景台看日出",when:"9/28 03:00 WIB(UTC+7)",day:2},
+ {t:"2026-09-28T15:30:00+07:00",label:"泗水起飞 JT802 → 巴厘岛",when:"9/28 15:30 WIB(UTC+7)",day:2},
+ {t:"2026-09-29T07:10:00+08:00",label:"XU 飞科莫多（QZ644）",when:"9/29 07:10 WITA(UTC+8)",day:3},
+ {t:"2026-09-29T11:25:00+08:00",label:"GAO 飞科莫多（QZ646）",when:"9/29 11:25 WITA(UTC+8)",day:3},
+ {t:"2026-09-30T06:30:00+08:00",label:"科莫多拼船一日游 · 码头集合",when:"9/30 06:30 WITA(UTC+8)",day:4},
+ {t:"2026-10-01T08:40:00+08:00",label:"XU 飞回巴厘岛（QZ645）",when:"10/1 08:40 WITA(UTC+8)",day:5},
+ {t:"2026-10-01T10:35:00+08:00",label:"GAO 飞回巴厘岛（QZ643）",when:"10/1 10:35 WITA(UTC+8)",day:5},
+ {t:"2026-10-01T14:00:00+08:00",label:"开船去佩妮达岛（OceanSpeed）",when:"10/1 14:00 WITA(UTC+8)",day:5},
+ {t:"2026-10-01T18:15:00+08:00",label:"精灵坠崖日落 🌅",when:"10/1 18:15 WITA(UTC+8)",day:5},
+ {t:"2026-10-02T08:30:00+08:00",label:"出发钻石沙滩（9 点前到）",when:"10/2 08:30 WITA(UTC+8)",day:6},
+ {t:"2026-10-02T16:00:00+08:00",label:"开船回巴厘岛（Wahana Virendra）",when:"10/2 16:00 WITA(UTC+8)",day:6},
+ {t:"2026-10-03T19:40:00+08:00",label:"飞新加坡（TR283）",when:"10/3 19:40 WITA(UTC+8)",day:7},
+ {t:"2026-10-04T10:00:00+08:00",label:"新加坡免费游 · 传统文化之旅",when:"10/4 10:00 SGT(UTC+8)",day:8},
+ {t:"2026-10-04T16:30:00+08:00",label:"飞杭州（TR188）",when:"10/4 16:30 SGT(UTC+8)",day:8},
+ {t:"2026-10-04T21:45:00+08:00",label:"抵达杭州萧山 T4 🏠 行程结束",when:"10/4 21:45 北京时间",day:8}
+];
+var DAYNAMES=["出发前","D1 出发日","D2 Bromo→巴厘岛","D3 飞科莫多","D4 科莫多跳岛","D5 佩妮达西线","D6 佩妮达东线","D7 飞新加坡","D8 回家"];
+function pad(n){return (n<10?"0":"")+n;}
+function tick(){
+  var now=Date.now(), next=null;
+  for(var i=0;i<EVENTS.length;i++){ if(new Date(EVENTS[i].t).getTime()>now){ next=EVENTS[i]; break; } }
+  if(!next){
+    document.getElementById("nowEvt").textContent="全部行程已完成，一路平安 🧡";
+    document.getElementById("nowTime").textContent="";
+    document.getElementById("cdD").textContent="0";document.getElementById("cdH").textContent="0";
+    document.getElementById("cdM").textContent="0";document.getElementById("cdS").textContent="0";
+    document.getElementById("nowDay").textContent="";
+    return;
+  }
+  var diff=new Date(next.t).getTime()-now;
+  var d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000),
+      m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
+  var pre = next.t==="2026-09-27T01:35:00+08:00" ? "距离起飞" : "下一站";
+  document.getElementById("nowEvt").textContent=pre+" · "+next.label;
+  document.getElementById("nowTime").textContent=next.when;
+  document.getElementById("cdD").textContent=d;
+  document.getElementById("cdH").textContent=pad(h);
+  document.getElementById("cdM").textContent=pad(m);
+  document.getElementById("cdS").textContent=pad(s);
+  document.getElementById("nowDay").textContent="当前节点："+DAYNAMES[next.day];
+}
+setInterval(tick,1000); tick();
+
+/* ===== 昼夜自动配色（本地时间 6:00–18:00 为白天，可手动覆盖） ===== */
+var themeBtn=document.getElementById("themeBtn");
+function applyTheme(mode){ document.documentElement.setAttribute("data-theme",mode);
+  themeBtn.textContent = mode==="dark" ? "☀️" : "🌙"; }
+function autoTheme(){ var h=new Date().getHours(); applyTheme(h>=6&&h<18 ? "light" : "dark"); }
+var saved=null;
+try{ saved=localStorage.getItem("trip-theme"); }catch(e){}
+if(saved){ applyTheme(saved); } else { autoTheme(); }
+themeBtn.onclick=function(){
+  var cur=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+  applyTheme(cur);
+  try{ localStorage.setItem("trip-theme",cur); }catch(e){}
+};
+setInterval(function(){ if(!saved){ autoTheme(); } },60000);
+
+/* ===== 逐日手绘路线条（展开可见） ===== */
+var STRIPS={
+ d1:{c:1,stops:[["上海浦东 T2","01:35 ✈"],["吉隆坡 KLIA2","转机 07:15–09:10"],["泗水朱安达 T2","10:45 WIB"],["Bromo 火山小镇","🚗 约 3h"]],modes:["✈️","✈️","🚗"]},
+ d2:{c:2,stops:[["酒店","03:00"],["观景台","🌅 05:15"],["Bromo 火山口","06:30"],["泗水机场 T1","🚗 10:30"],["巴厘岛","17:30 WITA"],["拉玛度假村","日落"]],modes:["🏍","🏍","🚗","✈️","🚗"]},
+ d3:{c:3,stops:[["巴厘岛机场","XU 07:10 / GAO 11:25"],["科莫多机场","XU 08:15 / GAO 12:40"],["Laprima 酒店","接机 · 15:00 入住"],["蓝洞 / 海边咖啡","半日游"]],modes:["✈️","🚗","🚗"]},
+ d4:{c:4,stops:[["Laprima","06:30 集合"],["帕达尔岛",""],["科莫多龙",""],["粉红沙滩",""],["回酒店","傍晚"]],modes:["⛵","⛵","⛵","⛵"]},
+ d5:{c:5,stops:[["科莫多机场","XU 08:40 / GAO 10:35"],["巴厘岛机场","XU 09:50 / GAO 11:50"],["萨努尔码头","取票 · 14:00 ⛵"],["佩妮达码头","14:45"],["破碎沙滩\n天使浴池",""],["精灵坠崖","🌅 18:15"],["酒店（待定）",""]],modes:["✈️","🚗","⛵","🚗","🚗","🚗"]},
+ d6:{c:6,stops:[["酒店","08:30"],["钻石沙滩","9 点前到"],["阿图海滩/树屋","随选"],["佩妮达码头","15:15"],["萨努尔","⛵ 16:00–16:45"],["商场晚饭","Discovery"],["拉玛度假村",""]],modes:["🚗","🚗","🚗","⛵","🚗","🚗"]},
+ d7:{c:7,stops:[["拉玛度假村","12:00 退房"],["库塔自由活动","按摩/纪念品"],["巴厘岛机场","17:00 · 19:40 ✈"],["樟宜机场 T1","22:35"],["机场过夜","T1 大沙发"]],modes:["🚗","🚗","✈️","🌙"]},
+ d8:{c:8,stops:[["免费游柜台","09:00 报到"],["市区文化之旅","10:00–12:30"],["星耀樟宜","午饭+大瀑布"],["樟宜 T1","16:30 ✈"],["杭州萧山 T4","21:45"]],modes:["🚌","🚌","🚶","✈️"]}
+};
+function buildStrip(key){
+  var data=STRIPS[key]; if(!data) return "";
+  var HEX=["","#e76f51","#f4a261","#2a9d8f","#457b9d","#d62828","#9b5de5","#3a86ff","#8d99ae"];
+  var col=HEX[data.c];
+  var n=data.stops.length, step=118, x0=60, w=Math.max(640, x0*2+step*(n-1)), y=34;
+  var s='<svg viewBox="0 0 '+w+' 108" role="img">';
+  for(var i=0;i<n-1;i++){
+    var a=x0+i*step, b=x0+(i+1)*step;
+    s+='<line x1="'+(a+11)+'" y1="'+y+'" x2="'+(b-11)+'" y2="'+y+'" style="stroke:'+col+'" stroke-width="2.6" stroke-dasharray="6 5" stroke-linecap="round"/>';
+    s+='<text x="'+((a+b)/2)+'" y="'+(y-8)+'" text-anchor="middle" font-size="12">'+data.modes[i]+'</text>';
+  }
+  for(var j=0;j<n;j++){
+    var x=x0+j*step, name=data.stops[j][0], sub=data.stops[j][1], lines=name.split("\n");
+    s+='<circle cx="'+x+'" cy="'+y+'" r="8.5" style="fill:'+col+';stroke:var(--card)" stroke-width="2.5"/>';
+    var ty=y+24;
+    for(var k=0;k<lines.length;k++){ s+='<text x="'+x+'" y="'+(ty+k*13)+'" text-anchor="middle" font-size="11" font-weight="600" style="fill:var(--ink)">'+lines[k]+'</text>'; }
+    if(sub){ s+='<text x="'+x+'" y="'+(ty+lines.length*13)+'" text-anchor="middle" font-size="9.5" style="fill:var(--muted)">'+sub+'</text>'; }
+  }
+  return s+"</svg>";
+}
+var boxes=document.querySelectorAll(".stripbox");
+for(var b=0;b<boxes.length;b++){ boxes[b].innerHTML=buildStrip(boxes[b].getAttribute("data-strip")); }
+</script>
+</body>
+</html>
